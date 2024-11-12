@@ -641,6 +641,7 @@ function insert_db_status($loc, $loc_prev)
 				}
 
 				//status stop
+				// problem dr idle ke stop, dt_last_stop = 0
 				if ($status == "online" && $sensor['acc'] == 0 && $sensor['motion'] == 0) {
 
 					$q = "UPDATE gs_objects SET `dt_last_stop`='" . $loc['dt_tracker'] . "' WHERE imei='" . $imei . "'";
@@ -692,7 +693,8 @@ function insert_db_status($loc, $loc_prev)
 					}
 				}
 
-				//status stop
+				//status stop				
+				// problem dr idle ke stop, dt_last_stop = 0
 				if ($status == "online" && $sensor['motion'] == 0) {
 					$q = "UPDATE gs_objects SET `dt_last_stop`='" . $loc['dt_tracker'] . "' WHERE imei='" . $imei . "'";
 					$r = mysqli_query($ms, $q) or die(mysqli_error($ms));

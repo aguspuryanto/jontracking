@@ -59,11 +59,13 @@
         
         // connect to mysql  
         $ms = mysqli_connect($gsValues['DB_HOSTNAME'], $gsValues['DB_USERNAME'], $gsValues['DB_PASSWORD'], $gsValues['DB_NAME'], $gsValues['DB_PORT']);
-        
-        if (!$ms)
+        // Check connection
+        // if (!$ms)
+        if($ms === false)
         {
-                echo "Error connecting to database.";
-                die;
+                // echo "Error connecting to database.";
+                // die;
+                die("ERROR: Could not connect. " . mysqli_connect_error());
         }
         
         mysqli_set_charset($ms, 'utf8');
@@ -115,4 +117,7 @@
                 
                 return mysqli_real_escape_string($ms, $value);
         }
+
+        // Close connection
+        // mysqli_close($ms);
 ?>

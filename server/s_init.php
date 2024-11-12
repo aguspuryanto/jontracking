@@ -4,7 +4,9 @@
         error_reporting(E_ALL ^ E_DEPRECATED);
     
         // set 0 UTC timezone
-        date_default_timezone_set('UTC');
+        // date_default_timezone_set('UTC');
+
+        date_default_timezone_set('Asia/Jakarta');
     
         $gsValues = array();
         
