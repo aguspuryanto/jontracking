@@ -112,11 +112,11 @@
 						// problem dr idle ke stop, dt_last_stop = 0
 						if($dt_last_idle > 0 && $speed <= 0){
 							$result[$imei]['st'] = 's';
-							$result[$imei]['ststr'] = '109.' . $la['STOPPED'].' '.getTimeDetails(strtotime(gmdate("Y-m-d H:i:s")) - $dt_last_stop, true);
+							$result[$imei]['ststr'] = $la['STOPPED'].' '.getTimeDetails(strtotime(gmdate("Y-m-d H:i:s")) - $dt_last_stop, true);
 
 						} else {
 							$result[$imei]['st'] = 's';
-							$result[$imei]['ststr'] = '113.' . $la['STOPPED'].' '.getTimeDetails(strtotime(gmdate("Y-m-d H:i:s")) - $dt_last_stop, true);
+							$result[$imei]['ststr'] = $la['STOPPED'].' '.getTimeDetails(strtotime(gmdate("Y-m-d H:i:s")) - $dt_last_stop, true);
 						}
 					}
 					elseif($params['acc'] == 0 && $param['motion'] == 0 && ($speed <= 20) || $params['acc'] == 0 && $param['motion'] == 1 && ($speed <= 20))
@@ -125,12 +125,12 @@
 						// acc 0 Engine Off, acc 1 Engine On
 						// motion 1 moving, motion 0 stop
 						$result[$imei]['st'] = 's';
-						$result[$imei]['ststr'] = '122.' . $la['STOPPED'].' '.getTimeDetails(strtotime(gmdate("Y-m-d H:i:s")) - $dt_last_stop, true);
+						$result[$imei]['ststr'] = $la['STOPPED'].' '.getTimeDetails(strtotime(gmdate("Y-m-d H:i:s")) - $dt_last_stop, true);
 					}
 					elseif($params['acc'] == 1 && ($speed <= 10))
 					{
 						$result[$imei]['st'] = 'i';
-						$result[$imei]['ststr'] = "127" . $la['ENGINE_IDLE'].' '.getTimeDetails(strtotime(gmdate("Y-m-d H:i:s")) - $dt_last_idle, true);						
+						$result[$imei]['ststr'] = $la['ENGINE_IDLE'].' '.getTimeDetails(strtotime(gmdate("Y-m-d H:i:s")) - $dt_last_idle, true);						
 					}
 					else
 					{
@@ -147,7 +147,7 @@
 						if ($params['acc'] == 1  && $speed <= 0)
 						{
 							$result[$imei]['st'] = 'i';
-							$result[$imei]['ststr'] = "144" . $la['ENGINE_IDLE'].' '.getTimeDetails(strtotime(gmdate("Y-m-d H:i:s")) - $dt_last_idle, true);
+							$result[$imei]['ststr'] = $la['ENGINE_IDLE'].' '.getTimeDetails(strtotime(gmdate("Y-m-d H:i:s")) - $dt_last_idle, true);
 						}
 						elseif($params['acc'] == 0  && $param['motion'] == 0 && ($speed <= 20) || $params['acc'] == 0 && $param['motion'] == 1 && ($speed <= 20))
 						{
@@ -155,12 +155,12 @@
 							// acc 0 Engine Off, acc 1 Engine On
 							// motion 1 moving, motion 0 stop
 							$result[$imei]['st'] = 's';
-							$result[$imei]['ststr'] = '152.' . $la['STOPPED'].' '.getTimeDetails(strtotime(gmdate("Y-m-d H:i:s")) - $dt_last_stop, true);
+							$result[$imei]['ststr'] = $la['STOPPED'].' '.getTimeDetails(strtotime(gmdate("Y-m-d H:i:s")) - $dt_last_stop, true);
 						}
 						elseif($params['acc'] == 1 && ($speed <= 10))
 						{
 							$result[$imei]['st'] = 's';
-							$result[$imei]['ststr'] = '157.' . $la['STOPPED'].' '.getTimeDetails(strtotime(gmdate("Y-m-d H:i:s")) - $dt_last_stop, true);						
+							$result[$imei]['ststr'] = $la['STOPPED'].' '.getTimeDetails(strtotime(gmdate("Y-m-d H:i:s")) - $dt_last_stop, true);						
 						}
 						else
 						{
