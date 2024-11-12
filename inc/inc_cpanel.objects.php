@@ -66,7 +66,7 @@
                 </div>
                 <div class="row2">
                         <div class="width40"><? echo $la['IMEI']; ?></div>
-                        <div class="width60"><input id="dialog_object_edit_imei" class="inputbox" type="text" maxlength="15" disabled="<?=($_SESSION["cpanel_privileges"] == 'super_admin' || $_SESSION["cpanel_privileges"] == 'admin' ? '' : 'disabled') ?>"/></div>
+                        <div class="width60"><input id="dialog_object_edit_imei" class="inputbox" type="text" maxlength="15" <?=($_SESSION["cpanel_privileges"] == 'super_admin' || $_SESSION["cpanel_privileges"] == 'admin' ? '' : 'disabled') ?>/></div>
                 </div>
                 <div class="row2">
                         <div class="width40"><? echo $la['TRANSPORT_MODEL']; ?></div>
@@ -94,8 +94,8 @@
                 </div>
                 <div class="row2">
                         <div class="width40"><? echo $la['EXPIRE_ON']; ?></div>
-                        <div class="width10"><input id="dialog_object_edit_object_expire" class="checkbox" type="checkbox" onChange="objectEditCheck();" disabled="<?=($_SESSION["cpanel_privileges"] == 'super_admin' || $_SESSION["cpanel_privileges"] == 'admin' ? '' : 'disabled') ?>"/></div>
-                        <div class="width50"><input class="inputbox-calendar inputbox width100" id="dialog_object_edit_object_expire_dt" disabled="<?=($_SESSION["cpanel_privileges"] == 'super_admin' || $_SESSION["cpanel_privileges"] == 'admin' ? '' : 'disabled') ?>"/></div>
+                        <div class="width10"><input id="dialog_object_edit_object_expire" class="checkbox" type="checkbox" onChange="objectEditCheck();" <?=($_SESSION["cpanel_privileges"] == 'super_admin' || $_SESSION["cpanel_privileges"] == 'admin' ? '' : 'disabled') ?>/></div>
+                        <div class="width50"><input class="inputbox-calendar inputbox width100" id="dialog_object_edit_object_expire_dt" <?=($_SESSION["cpanel_privileges"] == 'super_admin' || $_SESSION["cpanel_privileges"] == 'admin' ? '' : 'disabled') ?>/></div>
                 </div>
                 <div class="row2">
                         <div class="width100">
