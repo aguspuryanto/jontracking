@@ -648,9 +648,9 @@ function insert_db_status($loc, $loc_prev)
 
 					// problem dr idle ke stop, dt_last_stop = 0
 					if($dt_last_idle > 0 && $loc['speed'] <= 0){
-						// $dt_last_stop += strtotime($loc['dt_tracker']);
-						$q = "UPDATE gs_objects SET `dt_last_stop`='" . ($loc['dt_tracker']) . "' WHERE imei='" . $imei . "'";
-						$r = mysqli_query($ms, $q) or die(mysqli_error($ms));
+						// $dt_last_stop + $dt_last_idle
+						// $q = "UPDATE gs_objects SET `dt_last_stop`='" . ($loc['dt_tracker']) . "' WHERE imei='" . $imei . "'";
+						// $r = mysqli_query($ms, $q) or die(mysqli_error($ms));
 					} else {
 						$q = "UPDATE gs_objects SET `dt_last_stop`='" . $loc['dt_tracker'] . "' WHERE imei='" . $imei . "'";
 						$r = mysqli_query($ms, $q) or die(mysqli_error($ms));

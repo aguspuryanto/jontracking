@@ -41,5 +41,5 @@
         $gsValues['DB_PORT']     = '3306'; // database host
         $gsValues['DB_NAME']	 = 'gs'; // database name
         $gsValues['DB_USERNAME'] = 'root'; // database user name
-        $gsValues['DB_PASSWORD'] = 'asdf'; // database password
+        $gsValues['DB_PASSWORD'] = ''; // database password
 ?>
