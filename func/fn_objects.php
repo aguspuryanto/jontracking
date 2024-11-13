@@ -112,11 +112,11 @@
 						// problem dr idle ke stop, dt_last_stop = 0
 						if($dt_last_idle > 0 && $speed <= 0){
 							$result[$imei]['st'] = 's';
-							$result[$imei]['ststr'] = $la['STOPPED'].' '.getTimeDetails(strtotime(gmdate("Y-m-d H:i:s")) - $dt_last_stop, true);
+							$result[$imei]['ststr'] = '115_' . $la['STOPPED'].' '.getTimeDetails(strtotime(gmdate("Y-m-d H:i:s")) - $dt_last_stop, true);
 
 						} else {
 							$result[$imei]['st'] = 's';
-							$result[$imei]['ststr'] = $la['STOPPED'].' '.getTimeDetails(strtotime(gmdate("Y-m-d H:i:s")) - $dt_last_stop, true);
+							$result[$imei]['ststr'] = '119_' . $la['STOPPED'].' '.getTimeDetails(strtotime(gmdate("Y-m-d H:i:s")) - $dt_last_stop, true);
 						}
 					}
 					elseif($params['acc'] == 0 && $param['motion'] == 0 && ($speed <= 20) || $params['acc'] == 0 && $param['motion'] == 1 && ($speed <= 20))
@@ -125,7 +125,7 @@
 						// acc 0 Engine Off, acc 1 Engine On
 						// motion 1 moving, motion 0 stop
 						$result[$imei]['st'] = 's';
-						$result[$imei]['ststr'] = $la['STOPPED'].' '.getTimeDetails(strtotime(gmdate("Y-m-d H:i:s")) - $dt_last_stop, true);
+						$result[$imei]['ststr'] = '128_' . $la['STOPPED'].' '.getTimeDetails(strtotime(gmdate("Y-m-d H:i:s")) - $dt_last_stop, true);
 					}
 					elseif($params['acc'] == 1 && ($speed <= 10))
 					{
@@ -147,9 +147,9 @@
 						if ($params['acc'] == 1  && $speed <= 10)
 						{
 							$result[$imei]['st'] = 'i';
-							$result[$imei]['ststr'] = $la['ENGINE_IDLE'].' '.getTimeDetails(strtotime(gmdate("Y-m-d H:i:s")) - $dt_last_idle, true);
+							$result[$imei]['ststr'] = "150_" . $la['ENGINE_IDLE'].' '.getTimeDetails(strtotime(gmdate("Y-m-d H:i:s")) - $dt_last_idle, true);
 						}
-						elseif($params['acc'] == 0  && $param['motion'] == 0 && ($speed <= 20) || $params['acc'] == 0 && $param['motion'] == 1 && ($speed <= 20))
+						elseif($params['acc'] == 0  && ($param['motion'] == 0 || $param['motion'] == 1) && ($speed <= 10))
 						{
 							// params
 							// acc 0 Engine Off, acc 1 Engine On
@@ -305,7 +305,7 @@
 				// params
 				// acc 0 Engine Off, acc 1 Engine On
 				// motion 1 moving, motion 0 stop
-				// $result[$imei]['params'] = $params;
+				$result[$imei]['params'] = $params;
 				// $result[$imei]['EngineStatus'] = $params['acc'];
 			}
 		}

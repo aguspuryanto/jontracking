@@ -620,7 +620,7 @@ function insert_db_status($loc, $loc_prev)
 
 				//status moving
 				if (($dt_last_stop >= $dt_last_move) && ($loc['speed'] > 1)) {
-					if ($status == "online" && $sensor['acc'] == 0 && $sensor['motion'] == 1 && $loc['speed'] > 10) {
+					if ($status == "online" && $sensor['acc'] == 0 && $sensor['motion'] == 1 && $loc['speed'] > 1) {
 
 						$dt_difference = strtotime($dt_now) - strtotime($loc['dt_tracker']);
 						if ($dt_difference > 5 * 60) {
@@ -641,20 +641,10 @@ function insert_db_status($loc, $loc_prev)
 				}
 
 				//status stop
-				// problem dr idle ke stop, dt_last_stop = 0
 				if ($status == "online" && $sensor['acc'] == 0 && $sensor['motion'] == 0) {
-					//write log
-					writeLog('status_stop', json_encode(['status' => $status, 'motion' => $sensor['motion'], 'dt_last_stop' => $dt_last_stop, 'dt_last_idle' => $dt_last_idle, 'speed' => $loc['speed'], 'dt_tracker' => $loc['dt_tracker']]));
 
-					// problem dr idle ke stop, dt_last_stop = 0
-					if($dt_last_idle > 0 && $loc['speed'] <= 0){
-						// $dt_last_stop + $dt_last_idle
-						// $q = "UPDATE gs_objects SET `dt_last_stop`='" . ($loc['dt_tracker']) . "' WHERE imei='" . $imei . "'";
-						// $r = mysqli_query($ms, $q) or die(mysqli_error($ms));
-					} else {
-						$q = "UPDATE gs_objects SET `dt_last_stop`='" . $loc['dt_tracker'] . "' WHERE imei='" . $imei . "'";
-						$r = mysqli_query($ms, $q) or die(mysqli_error($ms));
-					}
+					$q = "UPDATE gs_objects SET `dt_last_stop`='" . $loc['dt_tracker'] . "' WHERE imei='" . $imei . "'";
+					$r = mysqli_query($ms, $q) or die(mysqli_error($ms));
 				}
 
 				//status Idle
@@ -664,7 +654,7 @@ function insert_db_status($loc, $loc_prev)
 				}
 
 				//status Idle
-				if ($status == "online" && $sensor['acc'] == 1 && $sensor['motion'] == 0 && $loc['speed'] < 2) {
+				if ($status == "online" && $sensor['acc'] == 1 && $sensor['motion'] == 0) {
 					$q = "UPDATE gs_objects SET `dt_last_idle`='" . $loc['dt_tracker'] . "' WHERE imei='" . $imei . "'";
 					$r = mysqli_query($ms, $q) or die(mysqli_error($ms));
 				}
@@ -704,21 +694,10 @@ function insert_db_status($loc, $loc_prev)
 
 				//status stop
 				if ($status == "online" && $sensor['motion'] == 0) {
-					//write log
-					writeLog('status_stop', json_encode(['status' => $status, 'motion' => $sensor['motion'], 'dt_last_stop' => $dt_last_stop, 'dt_last_idle' => $dt_last_idle, 'speed' => $loc['speed'], 'dt_tracker' => $loc['dt_tracker']]));
+					$q = "UPDATE gs_objects SET `dt_last_stop`='" . $loc['dt_tracker'] . "' WHERE imei='" . $imei . "'";
+					$r = mysqli_query($ms, $q) or die(mysqli_error($ms));
 
-					// problem dr idle ke stop, dt_last_stop = 0
-					if($dt_last_idle > 0 && $loc['speed'] <= 0){
-						$q = "UPDATE gs_objects SET `dt_last_stop`='" . $loc['dt_tracker'] . "' WHERE imei='" . $imei . "'";
-						$r = mysqli_query($ms, $q) or die(mysqli_error($ms));
-
-						$dt_last_stop += strtotime($loc['dt_tracker']);
-					} else {
-						$q = "UPDATE gs_objects SET `dt_last_stop`='" . $loc['dt_tracker'] . "' WHERE imei='" . $imei . "'";
-						$r = mysqli_query($ms, $q) or die(mysqli_error($ms));
-	
-						$dt_last_stop = strtotime($loc['dt_tracker']);
-					}
+					$dt_last_stop = strtotime($loc['dt_tracker']);
 				}
 			}
 		}else{
