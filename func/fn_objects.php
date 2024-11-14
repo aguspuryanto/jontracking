@@ -83,6 +83,7 @@
 				$angle = $row2['angle'];
 				$speed = $row2['speed'];
 				$params = json_decode($row2['params'],true);
+				$result[$imei]['params'] = $params;
 
 				$speed = convSpeedUnits($speed, 'km', $_SESSION["unit_distance"]);
 				$altitude = convAltitudeUnits($altitude, 'km', $_SESSION["unit_distance"]);
@@ -157,6 +158,11 @@
 							$result[$imei]['st'] = 's';
 							$result[$imei]['ststr'] = $la['STOPPED'].' '.getTimeDetails(strtotime(gmdate("Y-m-d H:i:s")) - $dt_last_stop, true);
 						}
+						// elseif($params['acc'] == 1 && ($speed <= 10))
+						// {
+						// 	$result[$imei]['st'] = 's';
+						// 	$result[$imei]['ststr'] = $la['STOPPED'].' '.getTimeDetails(strtotime(gmdate("Y-m-d H:i:s")) - $dt_last_stop, true);						
+						// }
 						else
 						{
 							$result[$imei]['st'] = 'm';
