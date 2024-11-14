@@ -4249,7 +4249,7 @@
 			$platform  = 'WINDOWS'; 
 		}
 		// return "Is Mobile: " . $is_mobile . "; Platform: " . $platform  . "; User Agent: " . get_browser_name($_SERVER['HTTP_USER_AGENT']);
-		return "User Agent: " . $user_agent . "; Platform: " . $platform . "; Is Mobile: " . $is_mobile;
+		return "User Agent: " . $user_agent . " (" . $_SERVER['HTTP_USER_AGENT'] . "); Platform: " . $platform . "; Is Mobile: " . $is_mobile;
 	}
 
 	function get_browser_name($user_agent)
