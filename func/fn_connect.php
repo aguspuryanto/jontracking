@@ -80,7 +80,8 @@
 					}
 
 					//write log
-					writeLog('user_access', 'User login: successful');
+					$get_device = $this->get_device_name();
+					writeLog('user_access', 'User login: successful; ' . $get_device);
 
 					//update user usage
 					updateUserUsage($row['id'], 1, false, false, false, false);

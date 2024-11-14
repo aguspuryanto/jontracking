@@ -4210,4 +4210,58 @@
 	// #################################################
 	// END LOG FUNCTIONS
 	// #################################################
+
+	/*
+	 * MObile Detect
+	 */
+
+	function get_device_name() {
+		// Check if the "mobile" word exists in User-Agent 
+		$isMob = is_numeric(strpos(strtolower($_SERVER["HTTP_USER_AGENT"]), "mobile")); 
+		
+		// Check if the "tablet" word exists in User-Agent 
+		$isTab = is_numeric(strpos(strtolower($_SERVER["HTTP_USER_AGENT"]), "tablet")); 
+		
+		// Platform check  
+		$isWin = is_numeric(strpos(strtolower($_SERVER["HTTP_USER_AGENT"]), "windows")); 
+		$isAndroid = is_numeric(strpos(strtolower($_SERVER["HTTP_USER_AGENT"]), "android")); 
+		$isIPhone = is_numeric(strpos(strtolower($_SERVER["HTTP_USER_AGENT"]), "iphone")); 
+		$isIPad = is_numeric(strpos(strtolower($_SERVER["HTTP_USER_AGENT"]), "ipad")); 
+		$isIOS = $isIPhone || $isIPad; 
+		
+		if($isMob){ 
+			if($isTab){ 
+				$device = 'Using Tablet Device...'; 
+			}else{ 
+				$device = 'Using Mobile Device...'; 
+			} 
+		}else{ 
+			$device = 'Using Desktop...'; 
+		} 
+		
+		if($isIOS){ 
+			$device = 'iOS'; 
+		}elseif($isAndroid){ 
+			$device = 'ANDROID'; 
+		}elseif($isWin){ 
+			$device = 'WINDOWS'; 
+		}
+
+		return $device . "; " . get_browser_name($_SERVER['HTTP_USER_AGENT']);
+	}
+
+	function get_browser_name($user_agent)
+	{
+		if (strpos($user_agent, 'Opera') || strpos($user_agent, 'OPR/')) return 'Opera';
+		elseif (strpos($user_agent, 'Edge')) return 'Edge';
+		elseif (strpos($user_agent, 'Chrome')) return 'Chrome';
+		elseif (strpos($user_agent, 'Safari')) return 'Safari';
+		elseif (strpos($user_agent, 'Firefox')) return 'Firefox';
+		elseif (strpos($user_agent, 'MSIE') || strpos($user_agent, 'Trident/7')) return 'Internet Explorer';
+		
+		return 'Other';
+	}
+
+	// Usage:
+	// echo get_browser_name($_SERVER['HTTP_USER_AGENT']);
 ?>

@@ -659,6 +659,18 @@ function insert_db_status($loc, $loc_prev)
 					$r = mysqli_query($ms, $q) or die(mysqli_error($ms));
 				}
 
+				// Add new condition to update dt_last_stop
+				if ($status == "online" && $sensor['acc'] == 1 && $sensor['motion'] == 0) {
+					$q = "UPDATE gs_objects SET `dt_last_stop`=NOW() WHERE imei='" . $imei . "'";
+					$r = mysqli_query($ms, $q) or die(mysqli_error($ms));
+				}
+				
+				// Update dt_last_stop when acc is active and dt_last_idle is set
+				if ($status == "online" && $sensor['acc'] == 1 && $dt_last_idle != '') {
+					$q = "UPDATE gs_objects SET `dt_last_stop`=NOW() WHERE imei='" . $imei . "'";
+					$r = mysqli_query($ms, $q) or die(mysqli_error($ms));
+				}
+
 			} else {
 				$q1 = "SELECT count(*) as total from gs_object_status WHERE imei='" . $imei . "'";
 				$result = mysqli_query($ms, $q1);
@@ -698,6 +710,18 @@ function insert_db_status($loc, $loc_prev)
 					$r = mysqli_query($ms, $q) or die(mysqli_error($ms));
 
 					$dt_last_stop = strtotime($loc['dt_tracker']);
+				}
+
+				// Add new condition to update dt_last_stop
+				if ($status == "online" && $sensor['motion'] == 0) {
+					$q = "UPDATE gs_objects SET `dt_last_stop`=NOW() WHERE imei='" . $imei . "'";
+					$r = mysqli_query($ms, $q) or die(mysqli_error($ms));
+				}
+				
+				// Update dt_last_stop when acc is active and dt_last_idle is set
+				if ($status == "online" && $dt_last_idle != '') {
+					$q = "UPDATE gs_objects SET `dt_last_stop`=NOW() WHERE imei='" . $imei . "'";
+					$r = mysqli_query($ms, $q) or die(mysqli_error($ms));
 				}
 			}
 		}else{

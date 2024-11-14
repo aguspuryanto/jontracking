@@ -47,7 +47,7 @@
 		die;
 	}
 
-	if($method == 'GET' && $_GET['cmd'] == 'get_manager_info')
+	if($method == 'GET')
 	{
 		if($_GET['cmd'] == 'get_manager_info') {
 
@@ -105,11 +105,13 @@
 		// icon
 		if($_GET['cmd'] == 'get_icons') {
 			// $result = [];
-			foreach(glob('./images/*.*') as $filename){
-				$result[] = $filename;
+			// $url_root = $gsValues['URL_ROOT'];
+			foreach(glob($gsValues['PATH_ROOT'] . 'img/icon/*.*') as $filename){
+				$result[] = $gsValues['URL_ROOT'] . '/' . $filename;
 			}
 	
 			echo json_encode($result);
+			die;
 		}
 	}
 ?>
