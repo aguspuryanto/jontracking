@@ -104,7 +104,7 @@
 					setUserSessionCPanel($row['id']);
 					
 					//write log
-					$get_device = $this->get_device_name();
+					$get_device = get_device_name();
 					writeLog('user_access', 'User login: successful; ' . $get_device);
 					
 					//update user usage

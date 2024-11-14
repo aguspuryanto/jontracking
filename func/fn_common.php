@@ -4216,6 +4216,8 @@
 	 */
 
 	function get_device_name() {
+
+		$user_agent = get_browser_name($_SERVER['HTTP_USER_AGENT']);
 		// Check if the "mobile" word exists in User-Agent 
 		$isMob = is_numeric(strpos(strtolower($_SERVER["HTTP_USER_AGENT"]), "mobile")); 
 		
@@ -4231,23 +4233,23 @@
 		
 		if($isMob){ 
 			if($isTab){ 
-				$device = 'Using Tablet Device...'; 
+				$is_mobile = 'Using Tablet Device...'; 
 			}else{ 
-				$device = 'Using Mobile Device...'; 
+				$is_mobile = 'Using Mobile Device...'; 
 			} 
 		}else{ 
-			$device = 'Using Desktop...'; 
+			$is_mobile = 'Using Desktop...'; 
 		} 
 		
 		if($isIOS){ 
-			$device = 'iOS'; 
+			$platform  = 'iOS'; 
 		}elseif($isAndroid){ 
-			$device = 'ANDROID'; 
+			$platform  = 'ANDROID'; 
 		}elseif($isWin){ 
-			$device = 'WINDOWS'; 
+			$platform  = 'WINDOWS'; 
 		}
-
-		return $device . "; " . get_browser_name($_SERVER['HTTP_USER_AGENT']);
+		// return "Is Mobile: " . $is_mobile . "; Platform: " . $platform  . "; User Agent: " . get_browser_name($_SERVER['HTTP_USER_AGENT']);
+		return "User Agent: " . $user_agent . "; Platform: " . $platform . "; Is Mobile: " . $is_mobile;
 	}
 
 	function get_browser_name($user_agent)
