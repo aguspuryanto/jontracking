@@ -149,7 +149,7 @@
 							$result[$imei]['st'] = 'i';
 							$result[$imei]['ststr'] = $la['ENGINE_IDLE'].' '.getTimeDetails(strtotime(gmdate("Y-m-d H:i:s")) - $dt_last_idle, true);
 						}
-						elseif($params['acc'] == 0 && $param['motion'] == 1 && ($speed <= 20))
+						elseif($params['acc'] == 0 && $param['motion'] == 1 && ($speed >= 10))
 						{
 							// params
 							// acc 0 Engine Off, acc 1 Engine On

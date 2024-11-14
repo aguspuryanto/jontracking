@@ -15,16 +15,16 @@ gsValues['map_max_zoom'] = 18;
 gsValues['map_refresh'] = 10;
 
 // events refresh, default 30 seconds
-gsValues['event_refresh'] = 30;
+gsValues['event_refresh'] = 10; //30;
 
 // dashboard refresh, default 60 seconds
-gsValues['dashboard_refresh'] = 60;
+gsValues['dashboard_refresh'] = 10; //60;
 
 // cmd status refresh, default 60 seconds
-gsValues['cmd_status_refresh'] = 60;
+gsValues['cmd_status_refresh'] = 10; //60;
 
 // img gallery refresh, default 60 seconds
-gsValues['img_refresh'] = 60;
+gsValues['img_refresh'] = 10; //60;
 
 // chat refresh, default 10 seconds
 gsValues['chat_refresh'] = 10;
