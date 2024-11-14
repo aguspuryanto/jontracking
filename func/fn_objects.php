@@ -5,8 +5,6 @@
 	checkUserSession();
 
 	loadLanguage($_SESSION["language"], $_SESSION["units"]);
-	
-	// date_default_timezone_set('Asia/Jakarta');
 
 	// check privileges
 	if ($_SESSION["privileges"] == 'subuser')
@@ -96,41 +94,19 @@
 				$dt_last_idle = strtotime($row2['dt_last_idle']);
 				$dt_last_move = strtotime($row2['dt_last_move']);
 
-				// problem case
-				// 1. stop -> idle -> stop || stop -> cmd -> stop
-				// 2. move -> off -> move; status moving ratusan hari
-				// 3. off -> stop
-
-				// 1. Mesin berhenti, Mesin dinyalakan, Mesin bergerak (timer mulai berjalan), Mesin berhenti (timer berhenti)
 				if (($dt_last_stop > 0) || ($dt_last_move > 0))
 				{
 					// stopped and moving
 					//dP if ($dt_last_stop >= $dt_last_move)
-					// problem dr idle ke stop, dt_last_stop = 0
 					if (($dt_last_stop >= $dt_last_move) || ($speed <= 0))	//dP
 					{
-						// problem dr idle ke stop, dt_last_stop = 0
-						if($dt_last_idle > 0 && $speed <= 0){
-							$result[$imei]['st'] = 's';
-							$result[$imei]['ststr'] = '115_' . $la['STOPPED'].' '.getTimeDetails(strtotime(gmdate("Y-m-d H:i:s")) - $dt_last_stop, true);
-
-						} else {
-							$result[$imei]['st'] = 's';
-							$result[$imei]['ststr'] = '119_' . $la['STOPPED'].' '.getTimeDetails(strtotime(gmdate("Y-m-d H:i:s")) - $dt_last_stop, true);
-						}
-					}
-					elseif($params['acc'] == 0 && $param['motion'] == 0 && ($speed <= 20) || $params['acc'] == 0 && $param['motion'] == 1 && ($speed <= 20))
-					{
-						// params
-						// acc 0 Engine Off, acc 1 Engine On
-						// motion 1 moving, motion 0 stop
 						$result[$imei]['st'] = 's';
-						$result[$imei]['ststr'] = '128_' . $la['STOPPED'].' '.getTimeDetails(strtotime(gmdate("Y-m-d H:i:s")) - $dt_last_stop, true);
+						$result[$imei]['ststr'] = $la['STOPPED'].' '.getTimeDetails(strtotime(gmdate("Y-m-d H:i:s")) - $dt_last_stop, true);
 					}
 					elseif($params['acc'] == 1 && ($speed <= 10))
 					{
 						$result[$imei]['st'] = 'i';
-						$result[$imei]['ststr'] = "133_" . $la['ENGINE_IDLE'].' '.getTimeDetails(strtotime(gmdate("Y-m-d H:i:s")) - $dt_last_idle, true);						
+						$result[$imei]['ststr'] = $la['ENGINE_IDLE'].' '.getTimeDetails(strtotime(gmdate("Y-m-d H:i:s")) - $dt_last_idle, true);						
 					}
 					else
 					{
@@ -147,15 +123,7 @@
 						if ($params['acc'] == 1  && $speed <= 10)
 						{
 							$result[$imei]['st'] = 'i';
-							$result[$imei]['ststr'] = "150_" . $la['ENGINE_IDLE'].' '.getTimeDetails(strtotime(gmdate("Y-m-d H:i:s")) - $dt_last_idle, true);
-						}
-						elseif($params['acc'] == 0  && ($param['motion'] == 0 || $param['motion'] == 1) && ($speed <= 10))
-						{
-							// params
-							// acc 0 Engine Off, acc 1 Engine On
-							// motion 1 moving, motion 0 stop
-							$result[$imei]['st'] = 's';
-							$result[$imei]['ststr'] = "158_" . $la['STOPPED'].' '.getTimeDetails(strtotime(gmdate("Y-m-d H:i:s")) - $dt_last_stop, true);
+							$result[$imei]['ststr'] = $la['ENGINE_IDLE'].' '.getTimeDetails(strtotime(gmdate("Y-m-d H:i:s")) - $dt_last_idle, true);
 						}
 						else
 						{
@@ -298,15 +266,6 @@
 
 				// last image file
 				$result[$imei]['lif'] = $row2['last_img_file'];
-
-				// log
-				// $result[$imei]['_log'] = 'dt_last_stop: ' . $dt_last_stop . '; dt_last_move: ' . $dt_last_move . '; dt_last_idle: ' . $dt_last_idle . '; speed: ' . $speed;
-
-				// params
-				// acc 0 Engine Off, acc 1 Engine On
-				// motion 1 moving, motion 0 stop
-				$result[$imei]['params'] = $params;
-				// $result[$imei]['EngineStatus'] = $params['acc'];
 			}
 		}
 

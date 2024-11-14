@@ -1,4 +1,4 @@
-<?php
+<?
 	session_start();
 	
 	// if previous user did not log off, cancel his seesion and start new one
@@ -13,9 +13,10 @@
 	include ('func/fn_common.php');
 
 	$username = "demo";
-	$password = "demo123";
+	$password = "Jonusa@";
 	
 	$q = "SELECT * FROM `gs_users` WHERE `username`='".$username."' AND `password`='".md5($password)."' LIMIT 1";
+	//echo $q;
 	$r = mysqli_query($ms, $q);
 	
 	if ($row=mysqli_fetch_array($r))

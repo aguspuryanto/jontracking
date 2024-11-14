@@ -1,8 +1,4 @@
 <?
-	ini_set('display_errors', 1);
-	ini_set('display_startup_errors', 1);
-	error_reporting(E_ALL);
-
 	if(isset($_GET['au']))
 	{
 		session_start();
@@ -125,14 +121,14 @@
             margin-top: 40px;
         }
 		.clear_buttons a {
-            display: inline-block;
+            /* display: inline-block;
             padding: 10px 20px;
             background: #007bff;
             color: white;
             border-radius: 5px;
             text-decoration: none;
-            font-size: 16px;
-        }
+            font-size: 16px; */
+}
 	</style>
 </head>
 
@@ -196,6 +192,7 @@
 						
 						<div class="submit-btn">
 							<input type="submit" class="button" value="<? echo $la['LOGIN']; ?>" onClick="connectLogin(); return false;"/>
+							<p style="text-align: center;font-weight:bolder"><a href="demo.php">Demo</a></p>
 							<div class="remember-block">
 									<label for="remember_me" class="custom-checkbox" title="<? echo $la['REMEMBER_ME']; ?>"></label>				
 									<input class="checkbox float-right" type="checkbox" id="remember_me" name="checkbox-img" value="0">
@@ -218,6 +215,7 @@
 					</div>
 					<input type="hidden" id="rec_token" value="<? echo genLoginToken(); ?>" />
 					<input type="button" class="button" value="<? echo $la['RECOVER']; ?>" onClick="connectRecoverURL();"/>
+
 					<ul class="recover-register-block">
 						<li><a href="#connect"><? echo $la['LOGIN']; ?></a></li>
 						<? if ($gsValues['ALLOW_REGISTRATION'] == "true"){?>
@@ -252,7 +250,8 @@
 				</div>
 				<div class="clear" style="text-align: center;">
 					<div class="clear_buttons">
-						<img src="img/google_play_store.png" style="height: 40px;"/>
+						<!-- <a href="demo.php"><img src="img/live-demo-button.png" alt="Live Demo" style="width:140px;height:40px;"></a> -->
+						<a href="https://play.google.com/store/apps/details?id=com.jonusa.server"><img src="img/google_play_store.png" style="height: 40px;"/></a>
 						<img src="img/apple_app_store.png" style="height: 80px;"/>
 					</div>
 					<br>
