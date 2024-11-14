@@ -157,11 +157,6 @@
 							$result[$imei]['st'] = 's';
 							$result[$imei]['ststr'] = $la['STOPPED'].' '.getTimeDetails(strtotime(gmdate("Y-m-d H:i:s")) - $dt_last_stop, true);
 						}
-						elseif($params['acc'] == 1 && ($speed <= 10))
-						{
-							$result[$imei]['st'] = 's';
-							$result[$imei]['ststr'] = $la['STOPPED'].' '.getTimeDetails(strtotime(gmdate("Y-m-d H:i:s")) - $dt_last_stop, true);						
-						}
 						else
 						{
 							$result[$imei]['st'] = 'm';
