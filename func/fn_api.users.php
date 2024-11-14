@@ -49,59 +49,67 @@
 
 	if($method == 'GET' && $_GET['cmd'] == 'get_manager_info')
 	{
-		// echo var_dump($params);
-		// $params = explode('=', $params);
-		// var_dump($params);
-		$manager_id = @$_GET['manager_id'];
-		if(!$manager_id || !is_numeric($manager_id))
-		{
-			// $manager_id = $_SESSION['user_id'];
-			$result = [
-				'status' => 'ERROR',
-				'message' => 'Manager ID not found'
-			];
-		} else {
-				
-			$q = "SELECT * FROM `gs_users` WHERE `id`='".$manager_id."'";
-			$r = mysqli_query($ms, $q);
-			$row = mysqli_fetch_array($r);
-			
-			$info = json_decode($row['info'], true);
-			if ($info == null)
+		if($_GET['cmd'] == 'get_manager_info') {
+
+			$manager_id = @$_GET['manager_id'];
+			if(!$manager_id || !is_numeric($manager_id))
 			{
-				$info = array('name' => '',
-						'company' => '',
-						'address' => '',
-						'post_code' => '',
-						'city' => '',
-						'country' => '',
-						'phone1' => '',
-						'phone2' => '',
-						'email' => ''
-						);
+				// $manager_id = $_SESSION['user_id'];
+				$result = [
+					'status' => 'ERROR',
+					'message' => 'Manager ID not found'
+				];
+			} else {
+					
+				$q = "SELECT * FROM `gs_users` WHERE `id`='".$manager_id."'";
+				$r = mysqli_query($ms, $q);
+				$row = mysqli_fetch_array($r);
+				
+				$info = json_decode($row['info'], true);
+				if ($info == null)
+				{
+					$info = array('name' => '',
+							'company' => '',
+							'address' => '',
+							'post_code' => '',
+							'city' => '',
+							'country' => '',
+							'phone1' => '',
+							'phone2' => '',
+							'email' => ''
+							);
+				}
+				
+				$result = [
+					'status' => ($row) ? 'OK' : 'ERROR',
+					// 'sql' => $q,
+					'info' => $info
+				];
 			}
-			
-			$result = [
-				'status' => ($row) ? 'OK' : 'ERROR',
-				// 'sql' => $q,
-				'info' => $info
-			];
+	
+			echo json_encode($result);
+			die;
 		}
 
-		echo json_encode($result);
-		die;
-	}
+		// token
+		if($_GET['cmd'] == 'get_token') {
+			$result = [
+				'status' => 'OK',
+				'token' => genLoginToken()
+			];
+	
+			echo json_encode($result);
+			die;
+		}
 
-	if($method == 'GET' && $_GET['cmd'] == 'get_token')
-	{
-		// $result = [];
-		$result = [
-			'status' => 'OK',
-			'token' => genLoginToken()
-		];
-
-		echo json_encode($result);
-		die;
-		
+		// icon
+		if($_GET['cmd'] == 'get_icons') {
+			// $result = [];
+			foreach(glob('./images/*.*') as $filename){
+				$result[] = $filename;
+			}
+	
+			echo json_encode($result);
+		}
 	}
 ?>
