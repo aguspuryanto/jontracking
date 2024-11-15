@@ -4231,11 +4231,18 @@
 		$isIPad = is_numeric(strpos(strtolower($_SERVER["HTTP_USER_AGENT"]), "ipad")); 
 		$isIOS = $isIPhone || $isIPad; 
 		
-		if($isMob){ 
+		if($isMob){
+			$str = $_SERVER['HTTP_USER_AGENT'];
+			$pos1 = strpos($str, '(')+1;
+			$pos2 = strpos($str, ')')-$pos1;
+			$part = substr($str, $pos1, $pos2);
+			$parts = explode(" ", $part);
+			// echo $parts[2].' '.$parts[3].' '.$parts[4];
+
 			if($isTab){ 
-				$is_mobile = 'Using Tablet Device...'; 
+				$is_mobile = 'Using ' . $parts[2] . ' ' . $parts[3] . ' ' . $parts[4] . ' Tablet'; 
 			}else{ 
-				$is_mobile = 'Using Mobile Device...'; 
+				$is_mobile = 'Using ' . $parts[2] . ' ' . $parts[3] . ' ' . $parts[4]; 
 			} 
 		}else{ 
 			$is_mobile = 'Using Desktop...'; 

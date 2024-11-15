@@ -118,5 +118,17 @@
 			echo json_encode($result);
 			die;
 		}
+
+		// get access log
+		if($_GET['cmd']='get_logs') {
+
+			$file = gmdate("Y_m").'_user_access.log';
+			$path = $gsValues['PATH_ROOT'].'logs/'.$file;
+
+			$file = file_get_contents($path, true);
+			echo $file;
+			// echo json_decode($file, TRUE);
+			// die;
+		}
 	}
 ?>

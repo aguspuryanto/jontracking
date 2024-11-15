@@ -81,6 +81,16 @@
 
 					//write log
 					$get_device = get_device_name();
+
+					// tambahkan deviceId dan deviceModel
+					if(isset($_POST['deviceId'])) {
+						$get_device .= "deviceId: " . $_POST['deviceId'];
+					}
+
+					if(isset($_POST['deviceModel'])) {
+						$get_device .= "deviceModel: " . $_POST['deviceModel'];
+					}
+					
 					writeLog('user_access', 'User login: successful; ' . $get_device);
 
 					//update user usage
