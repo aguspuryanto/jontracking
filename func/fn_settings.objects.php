@@ -387,10 +387,10 @@
 			$row['engine_hours'] = floor($row['engine_hours'] / 60 / 60);
 
 			// map arrows
-			$default = array(	'arrow_no_connection' => 'arrow_red',
+			$default = array(	'arrow_no_connection' => 'arrow_grey',
 								'arrow_stopped' => 'arrow_red',
 								'arrow_moving' => 'arrow_green',
-								'arrow_engine_idle' => 'off'
+								'arrow_engine_idle' => 'arrow_yellow'
 								);
 
 			if (($row['map_arrows'] == '') || (json_decode($row['map_arrows'],true) == null))

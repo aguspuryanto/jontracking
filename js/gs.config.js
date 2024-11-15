@@ -40,13 +40,13 @@ gsValues['cmd_default'] = new Array();
 gsValues['cmd_default'] = [
     {name: 'alarm_arm'},
     {name: 'alarm_disarm'},
-    {name: 'command_interval', params: '120'},
+    {name: 'command_interval', params: '10'}, //120
     {name: 'engine_resume'},
     {name: 'engine_stop'},
     {name: 'output_off', params: '1'},
     {name: 'output_on', params: '1'},
     {name: 'photo_request'},
-    {name: 'position_interval', params: '60'},
+    {name: 'position_interval', params: '10'}, //60
     {name: 'tracking_start'},
     {name: 'tracking_stop'}
 ];

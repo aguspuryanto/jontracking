@@ -106,10 +106,15 @@
 		if($_GET['cmd'] == 'get_icons') {
 			// $result = [];
 			// $url_root = $gsValues['URL_ROOT'];
-			foreach(glob($gsValues['PATH_ROOT'] . 'img/icon/*.*') as $filename){
-				$result[] = $gsValues['URL_ROOT'] . '/' . $filename;
+			// foreach(glob($gsValues['PATH_ROOT'] . 'img/icon/*.*') as $filename){
+			// 	$result[] = str_replace($gsValues['PATH_ROOT'], "", $gsValues['URL_ROOT'] . $filename);
+			// }
+
+			$urlPath = $gsValues['URL_ROOT'] . 'img/markers/objects/';
+			$result = getFileList('img/markers/places');
+			for($i=0 ; $i < count($result) ; $i++)	{
+				$result[$i] = $urlPath . $result[$i];
 			}
-	
 			echo json_encode($result);
 			die;
 		}

@@ -85,6 +85,29 @@
 				$params = json_decode($row2['params'],true);
 				$result[$imei]['params'] = $params;
 
+				// acc 0 Engine Off, acc 1 Engine On
+				// motion 1 moving, motion 0 stop
+				// {
+				// 	"acc": "0",
+				// 	"adc1": "12.91",
+				// 	"archive": "0",
+				// 	"batteryLevel": "100",
+				// 	"blocked": "0",
+				// 	"charge": "1",
+				// 	"distance": "0",
+				// 	"event": "0",
+				// 	"hours": "7628000",
+				// 	"iccid": "8962100011723464292",
+				// 	"ignition": "0",
+				// 	"motion": "1",
+				// 	"odometer": "35",
+				// 	"result": "OK!",
+				// 	"rssi": "4",
+				// 	"sat": "5",
+				// 	"status": "68",
+				// 	"totalDistance": "11900281.44"
+				// }
+
 				$speed = convSpeedUnits($speed, 'km', $_SESSION["unit_distance"]);
 				$altitude = convAltitudeUnits($altitude, 'km', $_SESSION["unit_distance"]);
 
@@ -97,13 +120,64 @@
 				$dt_last_idle = strtotime($row2['dt_last_idle']);
 				$dt_last_move = strtotime($row2['dt_last_move']);
 
+				// kendaraan di kategorikan move jika :
+				// 1. acc1 motion 1
+				// 2. acc0 motion 1 >speed 10
+
+				// kendaraan di kategorikan idle jika :
+				// 1. acc1
+
+				// kendaran di kategorikan stop jika :
+				// 1. acc0 motion 0
+				// 2.acc0 motion1 speed <10
+
+				if (($dt_last_stop > 0) || ($dt_last_move > 0))
+				{
+					// stopped and moving
+					if ($dt_last_stop < $dt_last_move)
+					{
+						if($params['acc'] == 0 && $params['distance'] == 0){
+							$result[$imei]['st'] = 's';
+							$result[$imei]['ststr'] = $la['STOPPED'].' '.getTimeDetails(strtotime(gmdate("Y-m-d H:i:s")) - $dt_last_stop, true);
+						} else {
+							$result[$imei]['st'] = 'm';
+							$result[$imei]['ststr'] = $la['MOVING'].' '.getTimeDetails(strtotime(gmdate("Y-m-d H:i:s")) - $dt_last_move, true);
+						}
+					}
+					else
+					{
+						$result[$imei]['st'] = 's';
+						$result[$imei]['ststr'] = $la['STOPPED'].' '.getTimeDetails(strtotime(gmdate("Y-m-d H:i:s")) - $dt_last_stop, true);
+					}
+					
+					// idle
+					if (($dt_last_stop <= $dt_last_idle) && ($dt_last_move <= $dt_last_idle))
+					{
+						$result[$imei]['st'] = 'i';
+						$result[$imei]['ststr'] = $la['ENGINE_IDLE'].' '.getTimeDetails(strtotime(gmdate("Y-m-d H:i:s")) - $dt_last_idle, true);
+					}
+
+					// idle
+					if ($params['acc'] == 1)
+					{
+						$result[$imei]['st'] = 'i';
+						$result[$imei]['ststr'] = $la['ENGINE_IDLE'].' '.getTimeDetails(strtotime(gmdate("Y-m-d H:i:s")) - $dt_last_idle, true);
+					}
+
+					// move
+					if($params['acc'] == 1 && $params['motion'] == 1){
+						$result[$imei]['st'] = 'm';
+						$result[$imei]['ststr'] = $la['MOVING'].' '.getTimeDetails(strtotime(gmdate("Y-m-d H:i:s")) - $dt_last_move, true);
+					}
+				}
+
 				// problem case
 				// 1. stop -> idle -> stop || stop -> cmd -> stop
 				// 2. move -> off -> move; status moving ratusan hari
 				// 3. off -> stop
 
 				// 1. Mesin berhenti, Mesin dinyalakan, Mesin bergerak (timer mulai berjalan), Mesin berhenti (timer berhenti)
-				if (($dt_last_stop > 0) || ($dt_last_move > 0))
+				/*if (($dt_last_stop > 0) || ($dt_last_move > 0))
 				{
 					// stopped and moving
 					//dP if ($dt_last_stop >= $dt_last_move)
@@ -169,7 +243,7 @@
 							$result[$imei]['ststr'] = $la['MOVING'].' '.getTimeDetails(strtotime(gmdate("Y-m-d H:i:s")) - $dt_last_move, true);
 						}
 					}
-				}
+				}*/
 
 				// protocol
 				$result[$imei]['p'] = $row2['protocol'];
