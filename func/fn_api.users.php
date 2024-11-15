@@ -111,7 +111,7 @@
 			// }
 
 			$urlPath = $gsValues['URL_ROOT'] . 'img/markers/objects/';
-			$result = getFileList('img/markers/places');
+			$result = getFileList('img/markers/objects');
 			for($i=0 ; $i < count($result) ; $i++)	{
 				$result[$i] = $urlPath . $result[$i];
 			}
