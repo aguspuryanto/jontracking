@@ -425,12 +425,14 @@
 				if (!isset($map_arrows["arrow_moving"])) { $map_arrows["arrow_moving"] = $default["arrow_moving"]; }
 				if (!isset($map_arrows["arrow_engine_idle"])) { $map_arrows["arrow_engine_idle"] = $default["arrow_engine_idle"]; }
 
-				list($marker, $name, $status) = explode('_', $row['icon']);				
-				$map_arrows = array('arrow_no_connection' => $marker . '_' . $name . '_offline', // 'arrow_no_connection' => 'arrow_grey',
-					'arrow_stopped' => $marker . '_' . $name . '_static', // 'arrow_stopped' => 'arrow_red',
-					'arrow_moving' => $marker . '_' . $name, // 'arrow_moving' => 'arrow_green',
-					'arrow_engine_idle' => $marker . '_' . $name . '_idle', // 'arrow_engine_idle' => 'arrow_yellow'
-				);
+				if($row['icon']) {
+					list($marker, $name, $status) = explode('_', $row['icon']);				
+					$map_arrows = array('arrow_no_connection' => $marker . '_' . $name . '_offline', // 'arrow_no_connection' => 'arrow_grey',
+						'arrow_stopped' => $marker . '_' . $name . '_static', // 'arrow_stopped' => 'arrow_red',
+						'arrow_moving' => $marker . '_' . $name, // 'arrow_moving' => 'arrow_green',
+						'arrow_engine_idle' => $marker . '_' . $name . '_idle', // 'arrow_engine_idle' => 'arrow_yellow'
+					);
+				}
 			}
 
 			// accvirt
