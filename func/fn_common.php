@@ -4223,6 +4223,8 @@
 		
 		// Check if the "tablet" word exists in User-Agent 
 		$isTab = is_numeric(strpos(strtolower($_SERVER["HTTP_USER_AGENT"]), "tablet")); 
+
+		$isDart = is_numeric(strpos(strtolower($_SERVER["HTTP_USER_AGENT"]), "dart:io")); 
 		
 		// Platform check  
 		$isWin = is_numeric(strpos(strtolower($_SERVER["HTTP_USER_AGENT"]), "windows")); 
@@ -4245,12 +4247,12 @@
 				$is_mobile = 'Using ' . $parts[2] . ' ' . $parts[3] . ' ' . $parts[4]; 
 			} 
 		}else{ 
-			$is_mobile = 'Using Desktop...'; 
+			$is_mobile = 'Using ' . $parts[2] . ' ' . $parts[3] . ' ' . $parts[4]; 
 		} 
 		
 		if($isIOS){ 
 			$platform  = 'iOS'; 
-		}elseif($isAndroid){ 
+		}elseif($isAndroid || $isDart){
 			$platform  = 'ANDROID'; 
 		}elseif($isWin){ 
 			$platform  = 'WINDOWS'; 

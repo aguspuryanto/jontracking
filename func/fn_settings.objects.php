@@ -180,7 +180,6 @@
 			$q = "UPDATE `gs_objects` SET 	`name`='".$name."',
 											`icon`='".$icon."',
 											`map_icon`='".$map_icon."',
-											`map_arrows`='".$map_arrows."',
 											`tail_color`='".$tail_color."',
 											`tail_points`='".$tail_points."',
 											`device`='".$device."',
@@ -197,6 +196,9 @@
 											`forward_loc_data_imei`='".$forward_loc_data_imei."'
 											WHERE `imei`='".$imei."'";
 			$r = mysqli_query($ms, $q);
+
+			//write log
+			writeLog('edit_object', 'Edit object: successful. q: '.$$q);
 
 			// set time adjustment
 			$q = "SELECT * FROM `gs_objects` WHERE `imei`='".$imei."'";
@@ -245,6 +247,14 @@
 				$engine_hours = $engine_hours * 60 * 60;
 
 				$q = "UPDATE `gs_objects` SET `engine_hours`='".$engine_hours."' WHERE `imei`='".$imei."'";
+				$r = mysqli_query($ms, $q);
+			}
+
+			// `map_arrows`='".$map_arrows."',
+			$map_arrows = $_POST["map_arrows"];
+			if($map_arrows != 'false')
+			{
+				$q = "UPDATE `gs_objects` SET `map_arrows`='".$map_arrows."' WHERE `imei`='".$imei."'";
 				$r = mysqli_query($ms, $q);
 			}
 
@@ -387,11 +397,20 @@
 			$row['engine_hours'] = floor($row['engine_hours'] / 60 / 60);
 
 			// map arrows
-			$default = array(	'arrow_no_connection' => 'arrow_grey',
+			if($row['icon']) {
+				list($marker, $name, $status) = explode('_', $row['icon']);
+				$default = array('arrow_no_connection' => $marker . '_' . $name . '_offline', // 'arrow_no_connection' => 'arrow_grey',
+					'arrow_stopped' => $marker . '_' . $name . '_static', // 'arrow_stopped' => 'arrow_red',
+					'arrow_moving' => $marker . '_' . $name, // 'arrow_moving' => 'arrow_green',
+					'arrow_engine_idle' => $marker . '_' . $name . '_idle', // 'arrow_engine_idle' => 'arrow_yellow'
+				);
+			} else {
+				$default = array(	'arrow_no_connection' => 'arrow_red',
 								'arrow_stopped' => 'arrow_red',
 								'arrow_moving' => 'arrow_green',
-								'arrow_engine_idle' => 'arrow_yellow'
+								'arrow_engine_idle' => 'off'
 								);
+			}
 
 			if (($row['map_arrows'] == '') || (json_decode($row['map_arrows'],true) == null))
 			{
